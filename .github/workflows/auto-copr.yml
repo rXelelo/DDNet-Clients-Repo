@@ -1,0 +1,112 @@
+name: Build in COPR
+
+on:
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: 'Packages to build (comma-separated, or "all")'
+        required: false
+        default: 'all'
+        type: string
+
+jobs:
+  build-copr:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install copr-cli
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install copr-cli
+
+      - name: Configure copr-cli
+        run: |
+          mkdir -p ~/.config
+          cat > ~/.config/copr <<EOF
+          [copr-cli]
+          login = ${{ secrets.COPR_LOGIN }}
+          username = ${{ secrets.COPR_USERNAME }}
+          token = ${{ secrets.COPR_TOKEN }}
+          copr_url = https://copr.fedorainfracloud.org
+          EOF
+
+      - name: Get package list
+        id: packages
+        run: |
+          if [[ "${{ inputs.packages }}" == "all" ]]; then
+            packages=$(ls SPEC/*.spec | xargs -n1 basename | sed 's/.spec$//' | tr '\n' ' ')
+          else
+            packages=$(echo "${{ inputs.packages }}" | tr ',' ' ')
+          fi
+          echo "list=$packages" >> $GITHUB_OUTPUT
+          echo "📦 Building packages: $packages"
+
+      - name: Build packages in COPR
+        run: |
+          success=()
+          failed=()
+          
+          for package in ${{ steps.packages.outputs.list }}; do
+            echo "::group::Building $package"
+            echo "📤 Submitting $package to COPR..."
+            
+            if copr-cli build rxelelo/ddnet-clients SPEC/${package}.spec; then
+              echo "✅ $package build submitted successfully"
+              success+=("$package")
+            else
+              echo "❌ $package build submission failed"
+              failed+=("$package")
+            fi
+            echo "::endgroup::"
+          done
+          
+          echo "SUCCESSFUL_BUILDS=${success[*]}" >> $GITHUB_ENV
+          echo "FAILED_BUILDS=${failed[*]}" >> $GITHUB_ENV
+          
+          if [ ${#failed[@]} -gt 0 ]; then
+            exit 1
+          fi
+
+      - name: Build Summary
+        if: always()
+        run: |
+          echo "## 🏗️ COPR Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Project:** rxelelo/ddnet-clients" >> $GITHUB_STEP_SUMMARY
+          echo "**Requested packages:** ${{ steps.packages.outputs.list }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -n "$SUCCESSFUL_BUILDS" ]; then
+            echo "### ✅ Successfully submitted:" >> $GITHUB_STEP_SUMMARY
+            for pkg in $SUCCESSFUL_BUILDS; do
+              echo "- $pkg" >> $GITHUB_STEP_SUMMARY
+            done
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if [ -n "$FAILED_BUILDS" ]; then
+            echo "### ❌ Failed to submit:" >> $GITHUB_STEP_SUMMARY
+            for pkg in $FAILED_BUILDS; do
+              echo "- $pkg" >> $GITHUB_STEP_SUMMARY
+            done
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "🔗 [View builds in COPR](https://copr.fedorainfracloud.org/coprs/rxelelo/ddnet-clients/builds/)" >> $GITHUB_STEP_SUMMARY
+```
+
+## Що потрібно зробити:
+
+### 1. Отримайте COPR API токен:
+1. Перейдіть на https://copr.fedorainfracloud.org/api/
+2. Скопіюйте вміст конфігураційного файлу, він виглядає так:
+```
+   [copr-cli]
+   login = your_login_here
+   username = rxelelo
+   token = very_long_token_here
+   copr_url = https://copr.fedorainfracloud.org
