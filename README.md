@@ -1,5 +1,9 @@
 # DDNet-Clients Repo
 This is DDRaceNetowork Client for RPM based distros based on copr
+```
+sudo dnf/yun copr enable rxelelo/ddnet-clients
+sudo dnf install ↓
+```
 | Name | Status | Install Command |
 |-----------|------|---------|
 | [TWLauncher](https://twlauncher.netlify.app/) | Beta: [![Copr build status](https://copr.fedorainfracloud.org/coprs/rxelelo/ddnet-clients/package/twlauncher.b/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/rxelelo/ddnet-clients/package/twlauncher.b/) Release: [![Copr build status](https://copr.fedorainfracloud.org/coprs/rxelelo/ddnet-clients/package/twlauncher/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/rxelelo/ddnet-clients/package/twlauncher/) | sudo dnf/yum install twlauncher/twlauncher.b |
