@@ -97,16 +97,3 @@ jobs:
           fi
           
           echo "🔗 [View builds in COPR](https://copr.fedorainfracloud.org/coprs/rxelelo/ddnet-clients/builds/)" >> $GITHUB_STEP_SUMMARY
-```
-
-## Що потрібно зробити:
-
-### 1. Отримайте COPR API токен:
-1. Перейдіть на https://copr.fedorainfracloud.org/api/
-2. Скопіюйте вміст конфігураційного файлу, він виглядає так:
-```
-   [copr-cli]
-   login = your_login_here
-   username = rxelelo
-   token = very_long_token_here
-   copr_url = https://copr.fedorainfracloud.org
