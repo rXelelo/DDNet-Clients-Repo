@@ -14,7 +14,7 @@ Requires:       opusfile
 Requires:       curl
 Requires:       glew
 Requires:       wavpack
-Requires:       libavcodec-free
+Requires:       (ffmpeg-free or ffmpeg or libavcodec-free)
 Requires:       libnotify
 Requires:       miniupnpc
 Requires:       sqlite
