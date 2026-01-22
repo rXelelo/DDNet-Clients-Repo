@@ -1,5 +1,5 @@
 Name:           tclient
-Version:        10.7.0
+Version:        10.8.1
 Release:        1%{?dist}
 Summary:        Extended DDNet Teeworlds client.
 License:        Unknown
@@ -83,5 +83,5 @@ done
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
-* Sun Aug 10 2025 Rain Xelelo <rxelelo@outlook.com> - 1.14-2
-- Initial package for Fedora
+* Tue Jan 22 2026 Rain Xelelo <rxelelo@outlook.com> - 10.8.1
+- Update to 10.8.1
