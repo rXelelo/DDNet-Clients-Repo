@@ -1,5 +1,5 @@
 Name:           tclient
-Version:        10.8.1
+Version:        10.8.5
 Release:        1%{?dist}
 Summary:        Extended DDNet Teeworlds client.
 License:        Unknown
