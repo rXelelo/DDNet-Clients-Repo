@@ -5,7 +5,7 @@ Summary:        Extended DDNet Teeworlds client.
 License:        Unknown
 URL:            https://tclient.app/
 Source0:        https://github.com/sjrc6/TaterClient-ddnet/releases/download/V%{version}/TClient-ubuntu.tar.xz
-Source1:        https://rxelelo.gitlab.io/rxrepo/rxrepo/os/x86_64/tclient.png
+Source1:        https://rxelelo.gitlab.io/rxrepo/icons/tclient.png
 ExclusiveArch:  x86_64
 
 # Runtime dependencies
