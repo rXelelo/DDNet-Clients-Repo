@@ -1,5 +1,5 @@
 Name:           rclient
-Version:        2.1.0
+Version:        2.2.1
 Release:        1%{?dist}
 Summary:        Yet another fork of TaterClient for DDNet
 License:        Unknown
