@@ -1,5 +1,4 @@
 name: Build in COPR
-
 on:
   workflow_dispatch:
     inputs:
@@ -12,16 +11,16 @@ on:
 jobs:
   build-copr:
     runs-on: ubuntu-latest
-    
+    container:
+      image: fedora:latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install copr-cli
+      - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip
-          pip3 install copr-cli
+          dnf install -y copr-cli rpmdevtools rpm-build
 
       - name: Configure copr-cli
         run: |
@@ -45,28 +44,47 @@ jobs:
           echo "list=$packages" >> $GITHUB_OUTPUT
           echo "📦 Building packages: $packages"
 
-      - name: Build packages in COPR
+      - name: Build SRPMs and submit to COPR
         run: |
           success=()
           failed=()
-          
+          mkdir -p SRPMS
+
           for package in ${{ steps.packages.outputs.list }}; do
             echo "::group::Building $package"
-            echo "📤 Submitting $package to COPR..."
-            
-            if copr-cli build rxelelo/ddnet-clients SPEC/${package}.spec; then
-              echo "✅ $package build submitted successfully"
+            echo "📥 Fetching sources for $package..."
+
+            spectool -g -C SPEC/ SPEC/${package}.spec
+
+            echo "🔨 Building SRPM for $package..."
+            rpmbuild -bs SPEC/${package}.spec \
+              --define "_sourcedir $(pwd)/SPEC" \
+              --define "_srcrpmdir $(pwd)/SRPMS"
+
+            srpm=$(ls SRPMS/${package}*.src.rpm 2>/dev/null | head -1)
+
+            if [ -z "$srpm" ]; then
+              echo "❌ Failed to build SRPM for $package"
+              failed+=("$package")
+              echo "::endgroup::"
+              continue
+            fi
+
+            echo "📤 Submitting $srpm to COPR..."
+            if copr-cli build rxelelo/ddnet-clients "$srpm"; then
+              echo "✅ $package submitted successfully"
               success+=("$package")
             else
-              echo "❌ $package build submission failed"
+              echo "❌ $package submission failed"
               failed+=("$package")
             fi
+
             echo "::endgroup::"
           done
-          
+
           echo "SUCCESSFUL_BUILDS=${success[*]}" >> $GITHUB_ENV
           echo "FAILED_BUILDS=${failed[*]}" >> $GITHUB_ENV
-          
+
           if [ ${#failed[@]} -gt 0 ]; then
             exit 1
           fi
@@ -79,7 +97,7 @@ jobs:
           echo "**Project:** rxelelo/ddnet-clients" >> $GITHUB_STEP_SUMMARY
           echo "**Requested packages:** ${{ steps.packages.outputs.list }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           if [ -n "$SUCCESSFUL_BUILDS" ]; then
             echo "### ✅ Successfully submitted:" >> $GITHUB_STEP_SUMMARY
             for pkg in $SUCCESSFUL_BUILDS; do
@@ -87,7 +105,7 @@ jobs:
             done
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
-          
+
           if [ -n "$FAILED_BUILDS" ]; then
             echo "### ❌ Failed to submit:" >> $GITHUB_STEP_SUMMARY
             for pkg in $FAILED_BUILDS; do
@@ -95,5 +113,5 @@ jobs:
             done
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
-          
+
           echo "🔗 [View builds in COPR](https://copr.fedorainfracloud.org/coprs/rxelelo/ddnet-clients/builds/)" >> $GITHUB_STEP_SUMMARY
