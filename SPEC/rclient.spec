@@ -5,7 +5,7 @@ Summary:        Yet another fork of TaterClient for DDNet
 License:        Unknown
 URL:            https://rushie-client.ru/
 Source0:        https://github.com/RushieClient/RushieClient-ddnet/releases/download/V%{version}/RClient-ubuntu.tar.xz
-Source1:        https://rxelelo.gitlab.io/rxrepo/rxrepo/os/x86_64/rclient.png
+Source1:        https://rxelelo.gitlab.io/rxrepo/icons/rclient.png
 ExclusiveArch:  x86_64
 
 # Runtime dependencies
