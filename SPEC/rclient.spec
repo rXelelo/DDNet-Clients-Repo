@@ -1,5 +1,5 @@
 Name:           rclient
-Version:        2.2.1
+Version:        2.2.4.1
 Release:        1%{?dist}
 Summary:        Yet another fork of TaterClient for DDNet
 License:        Unknown
@@ -83,5 +83,5 @@ done
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
-* Sun Aug 10 2025 Rain Xelelo <rxelelo@outlook.com> - 1.14-2
-- Initial package for Fedora
+* Tue Mar 17 2026 Rain Xelelo <rxelelo@outlook.com> - 2.2.4.1-1
+- bump to 2.2.4.1
