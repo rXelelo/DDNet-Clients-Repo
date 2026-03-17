@@ -1,5 +1,5 @@
 Name:           tclient
-Version:        10.8.5
+Version:        10.8.7
 Release:        1%{?dist}
 Summary:        Extended DDNet Teeworlds client.
 License:        Unknown
@@ -83,5 +83,7 @@ done
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Tue Mar 17 2026 Rain Xelelo <rxelelo@outlook.com> - 10.8.7
+- bump to 10.8.7
 * Tue Jan 22 2026 Rain Xelelo <rxelelo@outlook.com> - 10.8.1
 - Update to 10.8.1
