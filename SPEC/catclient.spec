@@ -1,7 +1,7 @@
 %global _name CatClient
 
 Name:           catclient
-Version:        1.0.1
+Version:        1.0.2
 Release:        1%{?dist}
 Summary:        Yet another fork of TaterClient for DDNet
 License:        Unknown
@@ -85,5 +85,7 @@ done
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Tue Mar 17 2026 Rain Xelelo <rxelelo@outlook.com> - 1.0.2-1
+- Bump 1.0.2
 * Tue Mar 17 2026 Rain Xelelo <rxelelo@outlook.com> - 1.0.1-1
 - Inital 1.0.1
