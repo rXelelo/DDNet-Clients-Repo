@@ -5,7 +5,7 @@ Version:        1.0.1
 Release:        1%{?dist}
 Summary:        Yet another fork of TaterClient for DDNet
 License:        Unknown
-URL:            
+URL:            https://github.com/quomy/CatClient/
 Source0:        https://github.com/quomy/CatClient/releases/download/%{Version}/CatClient-%{Version}-linux_x86_64.tar.gz
 Source1:        https://rxelelo.gitlab.io/rxrepo/icons/%{Name}
 ExclusiveArch:  x86_64
