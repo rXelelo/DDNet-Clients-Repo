@@ -9,12 +9,12 @@ Source1:        https://rxelelo.gitlab.io/rxrepo/icons/tclient.png
 ExclusiveArch:  x86_64
 
 # Runtime dependencies
-Requires:       freetype
+Requires:       (freetype or libfreetype6)
 Requires:       opusfile
 Requires:       curl
 Requires:       glew
 Requires:       wavpack
-Requires:       libavcodec-free
+Requires:       (ffmpeg-free or ffmpeg or libavcodec-free)
 Requires:       libnotify
 Requires:       miniupnpc
 Requires:       sqlite

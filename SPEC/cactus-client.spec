@@ -9,12 +9,12 @@ Source1:        https://rxelelo.gitlab.io/rxrepo/rxrepo/os/x86_64/cactus-client.
 ExclusiveArch:  x86_64
 
 # Runtime dependencies
-Requires:       freetype
+Requires:       (freetype or libfreetype6)
 Requires:       opusfile
 Requires:       curl
 Requires:       glew
 Requires:       wavpack
-Requires:       (ffmpeg-free or ffmpeg)
+Requires:       (ffmpeg-free or ffmpeg or libavcodec-free)
 Requires:       libnotify
 Requires:       miniupnpc
 Requires:       sqlite

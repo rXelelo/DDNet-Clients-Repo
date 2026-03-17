@@ -1,11 +1,13 @@
-Name:           rclient
-Version:        2.2.4.1
+%global _name CatClient
+
+Name:           catclient
+Version:        1.0.1
 Release:        1%{?dist}
 Summary:        Yet another fork of TaterClient for DDNet
 License:        Unknown
-URL:            https://rushie-client.ru/
-Source0:        https://github.com/RushieClient/RushieClient-ddnet/releases/download/V%{version}/RClient-ubuntu.tar.xz
-Source1:        https://rxelelo.gitlab.io/rxrepo/icons/rclient.png
+URL:            
+Source0:        https://github.com/quomy/CatClient/releases/download/%{Version}/CatClient-%{Version}-linux_x86_64.tar.gz
+Source1:        https://rxelelo.gitlab.io/rxrepo/icons/%{Name}
 ExclusiveArch:  x86_64
 
 # Runtime dependencies
@@ -33,8 +35,8 @@ mechanics and features.
 %global debug_package %{nil}
 %prep
 %setup -c -T
-mkdir -p rclient
-tar xf %{SOURCE0} -C rclient
+mkdir -p %{Name}
+tar xf %{SOURCE0} -C %{Name}
 
 %build
 
@@ -45,24 +47,24 @@ install -dm0755 %{buildroot}%{_datadir}/applications
 install -dm0755 %{buildroot}/opt/%{name}
 install -dm0755 %{buildroot}/opt/%{name}/game
 
-cp -a rclient/RClient-*-linux_x86_64/* %{buildroot}/opt/%{name}/game
+cp -a %{Name}/%{_name}-*-linux_x86_64/* %{buildroot}/opt/%{name}/game
 
 chmod +x %{buildroot}/opt/%{name}/game/DDNet
 
 cat > %{buildroot}%{_bindir}/%{name} << 'EOF'
 #!/bin/bash
-cd /opt/%{name}/game/
-exec ./DDNet "$@"
+cd /opt/%{Name}/game/
+exec ./%{_name} "$@"
 EOF
 
 chmod +x %{buildroot}%{_bindir}/%{name}
 
 cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << 'EOF'
 [Desktop Entry]
-Name=RClient
+Name=%{_name}
 Comment=A DDRaceNetwork modification adding new features
 Exec=%{name}
-Icon=/opt/%{name}/%{name}.png
+Icon=/opt/%{Name}/%{Name}.png
 Terminal=false
 Type=Application
 Categories=Game;
@@ -83,5 +85,5 @@ done
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
-* Tue Mar 17 2026 Rain Xelelo <rxelelo@outlook.com> - 2.2.4.1-1
-- bump to 2.2.4.1
+* Tue Mar 17 2026 Rain Xelelo <rxelelo@outlook.com> - 1.0.1-1
+- Inital 1.0.1
