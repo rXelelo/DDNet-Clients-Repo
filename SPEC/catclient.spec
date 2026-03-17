@@ -6,8 +6,8 @@ Release:        1%{?dist}
 Summary:        Yet another fork of TaterClient for DDNet
 License:        Unknown
 URL:            https://github.com/quomy/CatClient/
-Source0:        https://github.com/quomy/CatClient/releases/download/%{Version}/CatClient-%{Version}-linux_x86_64.tar.gz
-Source1:        https://rxelelo.gitlab.io/rxrepo/icons/%{Name}
+Source0:        https://github.com/quomy/CatClient/releases/download/%{version}/CatClient-%{version}-linux_x86_64.tar.gz
+Source1:        https://rxelelo.gitlab.io/rxrepo/icons/%{name}
 ExclusiveArch:  x86_64
 
 # Runtime dependencies
@@ -36,7 +36,7 @@ mechanics and features.
 %prep
 %setup -c -T
 mkdir -p %{Name}
-tar xf %{SOURCE0} -C %{Name}
+tar xf %{SOURCE0} -C %{name}
 
 %build
 
@@ -53,7 +53,7 @@ chmod +x %{buildroot}/opt/%{name}/game/DDNet
 
 cat > %{buildroot}%{_bindir}/%{name} << 'EOF'
 #!/bin/bash
-cd /opt/%{Name}/game/
+cd /opt/%{name}/game/
 exec ./%{_name} "$@"
 EOF
 
@@ -64,7 +64,7 @@ cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << 'EOF'
 Name=%{_name}
 Comment=A DDRaceNetwork modification adding new features
 Exec=%{name}
-Icon=/opt/%{Name}/%{Name}.png
+Icon=/opt/%{name}/%{name}.png
 Terminal=false
 Type=Application
 Categories=Game;
