@@ -35,7 +35,7 @@ mechanics and features.
 %global debug_package %{nil}
 %prep
 %setup -c -T
-mkdir -p %{Name}
+mkdir -p %{name}
 tar xf %{SOURCE0} -C %{name}
 
 %build
