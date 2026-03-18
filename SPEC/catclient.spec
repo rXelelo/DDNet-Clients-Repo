@@ -49,7 +49,7 @@ install -dm0755 %{buildroot}/opt/%{name}/game
 
 cp -a %{name}/%{_name}-*-linux_x86_64/* %{buildroot}/opt/%{name}/game
 
-chmod +x %{buildroot}/opt/%{name}/game/DDNet
+chmod +x %{buildroot}/opt/%{name}/game/%{_name}
 
 cat > %{buildroot}%{_bindir}/%{name} << 'EOF'
 #!/bin/bash
