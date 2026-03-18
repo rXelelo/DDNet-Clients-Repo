@@ -47,7 +47,7 @@ install -dm0755 %{buildroot}%{_datadir}/applications
 install -dm0755 %{buildroot}/opt/%{name}
 install -dm0755 %{buildroot}/opt/%{name}/game
 
-cp -a %{Name}/%{_name}-*-linux_x86_64/* %{buildroot}/opt/%{name}/game
+cp -a %{name}/%{_name}-*-linux_x86_64/* %{buildroot}/opt/%{name}/game
 
 chmod +x %{buildroot}/opt/%{name}/game/DDNet
 
