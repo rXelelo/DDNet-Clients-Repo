@@ -1,12 +1,12 @@
 %global _name CatClient
 
 Name:           catclient
-Version:        1.0.2
+Version:        1.0.4
 Release:        1%{?dist}
 Summary:        Yet another fork of TaterClient for DDNet
 License:        Unknown
 URL:            https://github.com/quomy/CatClient/
-Source0:        https://github.com/quomy/CatClient/releases/download/%{version}/CatClient-%{version}-linux_x86_64.tar.gz
+Source0:        https://github.com/rXelelo/CatClient/releases/download/%{version}/CatClient-ubuntu.tar.gz
 Source1:        https://rxelelo.gitlab.io/rxrepo/icons/%{name}.png
 ExclusiveArch:  x86_64
 
@@ -85,6 +85,8 @@ done
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Fri Mar 20 2026 Rain Xelelo <rxelelo@outlook.com> - 1.0.4-1
+- Bump 1.0.4
 * Tue Mar 17 2026 Rain Xelelo <rxelelo@outlook.com> - 1.0.2-1
 - Bump 1.0.2
 * Tue Mar 17 2026 Rain Xelelo <rxelelo@outlook.com> - 1.0.1-1
